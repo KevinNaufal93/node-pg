@@ -1,0 +1,20 @@
+{
+  "name": "pg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "env-cmd -f .env nodemon start src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.1"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.43.4",
+    "env-cmd": "^10.1.0"
+  }
+}
