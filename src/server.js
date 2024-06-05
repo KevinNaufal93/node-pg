@@ -1,20 +1,25 @@
 const http = require('http');
+const url = require('url');
 const { supabase } = require('./config/supabase');
+const userController = require('./controller/userController');
 
-const server = http.createServer( async (req, res) => {
-    let result;
-    const {data, error} = await supabase.from('user').select('*')
+const server = http.createServer(async(req, res) => {
 
-    if(error) {
-        console.error('[SUPABASE ERROR] >>>>>', error);
-        res.writeHead(500)
-        result = error;
-    } else {
-        res.writeHead(500)
-        result = data;
+    const parsedUrl = url.parse(req.url, true)
+    const { pathname, query } = parsedUrl
+    const { method } = req
+
+    switch (true) {
+        case method === 'GET' && pathname === '/users':
+            const fetchUser = await userController.getUsers(req, res);
+            break;
+        default:
+            res.statusCode = 404;
+            res.end('Not found');
     }
-    res.end(JSON.stringify(result))
-});
+    
+})
+
 const port = process.env.PORT || '5000';
 
 server.listen(port, () => {console.log(`Server running on port ${port}`)})
